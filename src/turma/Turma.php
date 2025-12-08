@@ -4,7 +4,7 @@
 
         private $id;
         private $nome;
-
+        private $idEntidade;
 
         public function getId(){
             return $this->id;
@@ -21,6 +21,13 @@
             $this->nome = $nome;
         }
 
+
+        public function getIdEntidade() {
+            return $this->idEntidade;
+        }
+        public function setIdEntidade($idEntidade) {
+            $this->idEntidade = $idEntidade;
+        }
     }
 
 ?>
