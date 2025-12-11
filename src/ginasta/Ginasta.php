@@ -6,6 +6,7 @@
         private $nome;
         private $anoNasc;
         private $foto;
+        private $idTurma;
 
 
         public function getId(){
@@ -37,6 +38,14 @@
         }
         public function setFoto($foto){
             $this->foto = $foto;
+        }
+
+
+        public function getIdTurma(){
+            return $this->idTurma;
+        }
+        public function setIdTurma($idTurma){
+            $this->idTurma = $idTurma;
         }
 
     }

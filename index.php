@@ -4,30 +4,44 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Súmula Digital GA</title>
-    </head>
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
 <body>
-    <div style="width: 300px; margin: 100px auto; text-align: center; border: 1px solid #ccc; padding: 20px;">
+
+    <div class="login-container">
         
         <h2>Súmula Digital GA</h2>
         
-        <?php if(isset($_GET['erro']) && $_GET['erro'] == 'login_invalido'): ?>
-            <p style="color: red;">Email ou senha incorretos!</p>
+        <?php if(isset($_GET['erro'])): ?>
+            <div class="msg-erro">
+                <?php
+                    if ($_GET['erro'] == 'login_invalido') {
+                        echo "Email ou senha incorretos!";
+                    } else if ($_GET['erro'] == 'campos_vazios') {
+                        echo "Preencha todos os campos!";
+                    } else if ($_GET['erro'] == 'acesso_negado') {
+                        echo "Faça login para acessar o sistema.";
+                    }
+                ?>
+            </div>
         <?php endif; ?>
 
         <form action="src/usuario/UsuarioController.php" method="POST">
             
-            <p>
-                <label>Email:</label><br>
-                <input type="email" name="email" required>
-            </p>
+            <div>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" placeholder="seu@email.com" required>
+            </div>
             
-            <p>
-                <label>Senha:</label><br>
-                <input type="password" name="senha" required>
-            </p>
+            <div>
+                <label for="senha">Senha:</label>
+                <input type="password" id="senha" name="senha" placeholder="Sua senha" required>
+            </div>
             
-            <button type="submit" name="acao" value="logar">Entrar</button>
+            <button type="submit" name="acao" value="logar">Entrar no Sistema</button>
         </form>
+
     </div>
+
 </body>
 </html>
