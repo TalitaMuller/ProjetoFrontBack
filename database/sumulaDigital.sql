@@ -24,7 +24,6 @@ CREATE TABLE entidade (
 
 
 
-
 -- 3. Tabela Turma
 CREATE TABLE turma (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -45,7 +44,6 @@ CREATE TABLE ginasta (
     idTurma INT NOT NULL,
     FOREIGN KEY (idTurma) REFERENCES turma(id)
 );
-
 
 
 
@@ -123,8 +121,6 @@ INSERT INTO aparelho (id, nome, quantExerc) VALUES
 -- 3. Inserindo Grupos dos Aparelhos
 
 
-
-
 -- Grupos do Salto 
 INSERT INTO grupo (nome, numero, idAparelho) VALUES 
 ('Saltos verticais', 1, 1),
@@ -157,6 +153,7 @@ INSERT INTO grupo (nome, numero, idAparelho) VALUES
 
 -- Grupos de Trave de Equilíbrio ou Paralelas Simétricas 
 
+
 -- Trave de Equilíbrio
 INSERT INTO grupo (nome, numero, idAparelho) VALUES 
 ('Giros', 1, 4),
@@ -178,17 +175,16 @@ INSERT INTO grupo (nome, numero, idAparelho) VALUES
 
 
 
-USE sumulaDigital;
-
-
 
 -- ==========================================================
 -- 4. POPULANDO A TABELA NIVEL (EXERCÍCIOS)
 -- ==========================================================
 
+
 -- ----------------------------------------------------------
 -- APARELHO: SALTO
 -- ----------------------------------------------------------
+
 
 -- Grupo 1: Saltos Verticais (ID 1)
 INSERT INTO nivel (ponto, exercicio, idGrupo) VALUES
@@ -226,6 +222,7 @@ INSERT INTO nivel (ponto, exercicio, idGrupo) VALUES
 (5, 'Mortal grupado ou carpado c/ 180° ou 360° de giro (minitrampolim)', 1),
 
 (5, 'Mortal estendido (minitrampolim)', 1);
+
 
 
 
@@ -267,9 +264,11 @@ INSERT INTO nivel (ponto, exercicio, idGrupo) VALUES
 
 
 
+
 -- ----------------------------------------------------------
 -- APARELHO: SOLO
 -- ----------------------------------------------------------
+
 
 -- Grupo 1: Tensões e posturais (ID 3)
 INSERT INTO nivel (ponto, exercicio, idGrupo) VALUES
@@ -305,6 +304,7 @@ INSERT INTO nivel (ponto, exercicio, idGrupo) VALUES
 
 
 (5, 'Esquadro afastado subindo à parada de mãos', 3);
+
 
 
 
@@ -398,6 +398,7 @@ INSERT INTO nivel (ponto, exercicio, idGrupo) VALUES
 
 
 
+
 -- Grupo 4: Saltos e giros Ginásticos (ID 6)
 INSERT INTO nivel (ponto, exercicio, idGrupo) VALUES 
 
@@ -439,6 +440,7 @@ INSERT INTO nivel (ponto, exercicio, idGrupo) VALUES
 
 
 
+
 -- Livres (ID 7)
 INSERT INTO nivel (ponto, exercicio, idGrupo) VALUES 
 
@@ -476,3 +478,404 @@ INSERT INTO nivel (ponto, exercicio, idGrupo) VALUES
 
 (5, 'Mortal de costas parado', 7);
 
+
+
+
+-- ----------------------------------------------------------
+-- APARELHO: ASSIMÉTRICAS / BARRA
+-- ----------------------------------------------------------
+
+
+-- Grupo 1: Suspensão (ID 8)
+INSERT INTO nivel (ponto, exercicio, idGrupo) VALUES 
+
+(1, 'Deslocamento b.a. na suspensão, ponta a ponta', 8),
+
+
+(2, 'Embalos na suspensão 2x BB com joelhos flexionados', 8),
+
+
+(3, 'Embalos na suspensão 2x', 8),
+
+(3, 'Educativo p/ quipe 1 – (Pernas unidas deslizamento à frente saindo da banqueta ou plinto com mãos iniciando na barra)', 8),
+
+
+(4, 'Educativo p/ quipe2 (Saltando do trampolim c/ pernas unidas)', 8),
+
+(4, 'Tomada de embalo (quadril à frente na altura da barra)', 8),
+
+(4, 'Oitavão do apoio de pés na b.b. p/ b.a.', 8),
+
+
+(5, 'Quipe na b.b.', 8),
+
+(5, 'Quipe na b.a.', 8),
+
+(5, 'Oitavão do apoio b.a.', 8),
+
+(5, 'Giro gigante', 8);
+
+
+
+
+-- Grupo 2: Apoios e Lançamentos (ID 9)
+INSERT INTO nivel (ponto, exercicio, idGrupo) VALUES
+
+(1, 'Saltar ao apoio', 9),
+
+
+(2, 'Lançamento atrás mostrar que o quadril descola da barra', 9),
+
+
+(3, 'Lançamento de pernas até a altura da barra', 9),
+
+
+(4, 'Lançamento acima da Horizontal', 9),
+
+
+(5, 'Lançamento á 45º', 9);
+
+
+
+
+-- Grupo 3: Circulares próximos (ID 10)
+INSERT INTO nivel (ponto, exercicio, idGrupo) VALUES
+
+(1, 'Do apoio, girar p/ frente', 10),
+
+
+(3, 'Giro de quadril p/ trás', 10),
+
+(3, 'Oitava c/ impulso do chão ou da Rampa', 10),
+
+
+(4, 'Oitava à força b.b.', 10),
+
+(4, 'Giro de quadril p/ frente', 10),
+
+
+(5, 'Oitava à força b.a.', 10),
+
+(5, 'Lançamento acima da Horizontal', 10),
+
+(5, 'Giro de quadril livre', 10);
+
+
+
+
+-- Grupo 4: Saídas (ID 11)
+INSERT INTO nivel (ponto, exercicio, idGrupo) VALUES
+
+(1, 'Do apoio, girar p/ frente', 11),
+
+
+(2, 'Saída: lançamento e solta atrás', 11),
+
+
+(3, 'Do apoio sublance com ou sem apoio dos pés b.b.', 11),
+
+(3, 'Grupadinho salto extensão entre as barras', 11),
+
+
+(4, 'Saída sublance c/ apoio dos pés b.a.', 11),
+
+
+(5, 'Saída sublance c/ apoio dos pés e 180° ou 360° de giro b.a.', 11),
+
+(5, 'Saída de mortal para frente ou trás b.a. (suspensão)', 11);
+
+
+
+
+-- Grupo 5: Livres (ID 12)
+INSERT INTO nivel (ponto, exercicio, idGrupo) VALUES
+
+(1, 'Sustentar queixo na altura da barra', 12),
+
+(1, 'Em suspensão, elevação de pernas flexionadas e unidas até encostar no peito 2``', 12),
+
+(1, 'Pé no buraco solta atrás b.b', 12),
+
+(1, 'Envelope 1 (Pé no buraco e solta à pm no apoio (solo ) b.b)', 12),
+
+
+(2, 'Canoinha na suspensão 2``', 12),
+
+(2, 'Envelope 2 (Pé no buraco, vai e volta b.b).', 12),
+
+
+(3, 'Deslocamento no apoio b.b. ponta a ponta', 12),
+
+(3, '2 puxadas b.a.(passar o queixo da barra)', 12),
+
+(3, 'Envelope 3 (Pé no buraco, vai e volta b.a.)', 12),
+
+
+(4, 'Canivete (Em suspensão, elevação de pernas estendidas mínimo 135°)', 12),
+
+(4, 'Grupadinho pegando na b.a.', 12);
+
+
+
+
+-- ----------------------------------------------------------
+-- APARELHO: TRAVE DE EQUILÍBRIO
+-- ----------------------------------------------------------
+
+
+-- Grupo 1: Giros (ID 13)
+INSERT INTO nivel (ponto, exercicio, idGrupo) VALUES
+
+(1, 'Rotação de 360º (caminhando)', 13),
+
+
+(2, 'Giro de 180º sobre os 2 pés em meia ponta', 13),
+
+
+(3, 'Giro de 180º sobre 1 Perna', 13),
+
+
+(4, 'Giro de 180º sobre 1 perna terminando na meia ponta + 180º na meia ponta', 13),
+
+
+(5, 'Giro de 360º sobre 1 perna', 13);
+
+
+
+
+-- Grupo 2: Saltos (ID 14)
+INSERT INTO nivel (ponto, exercicio, idGrupo) VALUES
+
+(1, 'Salto extensão', 14),
+
+(1, 'Salto gatinho', 14),
+
+
+(2, 'Extensão c/ 180° de giro', 14),
+
+(2, 'Salto grupado', 14),
+
+(2, 'Salto tesoura', 14),
+
+(2, 'Salto extensão na posição transversal', 14),
+
+
+(3, 'Salto gatinho c/ 180° de giro', 14),
+
+(3, 'Salto grupado c/ 180° de giro', 14),
+
+
+(4, 'Salto grupado na posição transversal', 14),
+
+(4, 'Salto Wolf', 14),
+
+(4, 'Salto sissone ou salto espacato', 14),
+
+
+(5, 'Salto de voo', 14),
+
+(5, 'Wolf c/ meio giro (180°)', 14);
+
+
+
+
+-- Grupo 3: Acrobáticos e PM (ID 15)
+INSERT INTO nivel (ponto, exercicio, idGrupo) VALUES
+
+(1, 'Sentar e levantar c/ apoio das mãos', 15),
+
+
+(2, 'Sentar e levantar s/ apoio das mãos', 15),
+
+
+(3, 'Impulso à parada de mãos (afastamento anteroposterior, uma perna deve chegar à vertical)', 15),
+
+(3, 'Roda (altura da trave até 60 cm)', 15),
+
+(3, 'Rolo p/ frente finalizando afastado', 15),
+
+
+(4, 'Rolo para frente', 15),
+
+(4, 'Parada de mãos longitudinal', 15),
+
+(4, 'Roda (Estrelinha)', 15),
+
+
+(5, 'Rolo para frente sem mãos', 15),
+
+(5, 'Arco para frente', 15),
+
+(5, 'Arco para trás', 15);
+
+
+
+
+-- Grupo 4: Saídas (ID 16)
+INSERT INTO nivel (ponto, exercicio, idGrupo) VALUES
+
+(1, 'Saída: Extensão, Grupado', 16),
+
+
+(2, 'Saída: Afastado', 16),
+
+(3, 'Saída: Rodante', 16),
+
+
+(4, 'Saída: Reversão', 16),
+
+(4, 'Saída: Borboleta (aterrissagem de pernas unidas)', 16),
+
+
+(5, 'Saída: Roda na ponta da trave + salto extensão de costas', 16),
+
+(5, 'Saída: Mortal para frente', 16),
+
+(5, 'Saída: Mortal de costas', 16);
+
+
+
+
+-- Grupo 5: Livres (Trave) (ID 17)
+INSERT INTO nivel (ponto, exercicio, idGrupo) VALUES
+
+(1, 'Entrada transversal: flanco', 17),
+
+(1, 'Caminhar p/ frente', 17),
+
+(1, 'Caminhar de lado', 17),
+
+(1, 'Caminhar de costas', 17),
+
+(1, 'Lançamento de pernas à frente (2x cada perna)', 17),
+
+(1, 'Chassê', 17),
+
+
+(2, 'Entrada transversal: grupada ou afastada', 17),
+
+(2, 'Avião 2"', 17),
+
+
+(3, 'Entrada: passagem de 1 das pernas entre os braços – posição cavalgada e sustentar 2"', 17),
+
+(3, 'Vela 2” c/ o quadril alto (mãos segurando em baixo da trave na altura da cabeça)', 17),
+
+
+(4, 'Entrada: espacato de frente 180º (trave média ou alta)', 17),
+
+(4, 'Entrada: esquadro afastado (longitudinal, trave média ou alta)', 17),
+
+(4, 'Posição de equilíbrio Y - 2” acima de 90°', 17),
+
+(4, 'Ponchê com abertura 180º', 17),
+
+
+(5, 'Entrada: esquadro afastado (transversal)', 17),
+
+(5, 'Parada de mãos na transversal e retorna à trave', 17);
+
+
+
+
+-- ----------------------------------------------------------
+-- APARELHO: PARALELAS SIMÉTRICAS
+-- ----------------------------------------------------------
+
+
+-- Grupo 1: Apoios (ID 18)
+INSERT INTO nivel (ponto, exercicio, idGrupo) VALUES
+
+(1, 'Deslocamento em 4 apoios de frente, lado ou dorsal', 18),
+
+
+(2, 'Deslocamento no apoio', 18),
+
+
+(3, 'Flexão e extensão dos braços no apoio 2x', 18),
+
+
+(4, 'Balanços no apoio', 18),
+
+
+(5, 'Balanços no apoio acima de 45º', 18);
+
+
+
+
+-- Grupo 2: Suspensões (ID 19)
+INSERT INTO nivel (ponto, exercicio, idGrupo) VALUES
+
+(1, 'Deslocamento na suspensão com pernas estendidas', 19),
+
+
+(2, 'Deslocamento na suspensão com pernas grupadas', 19),
+
+
+(3, 'Balanços na suspensão com pernas grupadas', 19),
+
+
+(4, 'Balanços na suspensão com pernas estendidas', 19),
+
+
+(5, 'Balanços no apoio braquial', 19);
+
+
+
+
+-- Grupo 3: Forças Estáticas (ID 20)
+INSERT INTO nivel (ponto, exercicio, idGrupo) VALUES
+
+(1, 'Vela estendida 1"', 20),
+
+
+(2, 'Vela carpada 1"', 20),
+
+
+(3, 'Da suspensão, subir ao apoio com auxílio das pernas', 20),
+
+
+(4, 'Dominação traseira', 20),
+
+
+(5, 'Parada de ombros 1"', 20);
+
+
+
+
+-- Grupo 4: Esquadros (ID 21)
+INSERT INTO nivel (ponto, exercicio, idGrupo) VALUES
+
+(1, 'Esquadro grupado na suspensão 1"', 21),
+
+
+(2, 'Esquadro carpado na suspensão 1"', 21),
+
+
+(3, 'Esquadro grupado no apoio 1"', 21),
+
+
+(4, 'Esquadro carpado no apoio 1"', 21),
+
+
+(5, 'Esquadro alto no apoio 1"', 21);
+
+
+
+
+-- Grupo 5: Saídas (Simétricas) (ID 22)
+INSERT INTO nivel (ponto, exercicio, idGrupo) VALUES
+
+(1, 'Passagem grupada das pernas entre os braços e solta atrás', 22),
+
+
+(2, 'Passagem grupada das pernas entre os braços vai e volta', 22),
+
+
+(3, 'Passagem carpada das pernas entre os braços vai e volta', 22),
+
+
+(4, 'Saída pelo balanço atrás no apoio', 22),
+
+
+(5, 'Saída pela frente com meia volta do balanço no apoio', 22);
