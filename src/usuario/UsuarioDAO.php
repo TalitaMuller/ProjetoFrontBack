@@ -1,10 +1,8 @@
 <?php
-
-require_once __DIR__ . '/../../config/Conecta.php'; 
-require_once 'Usuario.php';
+require_once __DIR__ . '/../../config/Conecta.php';
 
 class UsuarioDAO {
-
+    
     private $conexao;
 
     public function __construct() {
@@ -12,27 +10,41 @@ class UsuarioDAO {
         $this->conexao = $database->getConexao();
     }
 
-    public function logar(Usuario $usuario) {
-        try {
-            $sql = "SELECT * FROM usuario WHERE email = :email AND senha = :senha";
-            $stmt = $this->conexao->prepare($sql);
-            
-            // Vincula os valores do model
-            $stmt->bindValue(':email', $usuario->getEmail());
-            $stmt->bindValue(':senha', $usuario->getSenha());
-            
-            $stmt->execute();
+    public function cadastrar($nome, $email, $senha) {
+        $senhaHash = password_hash($senha, PASSWORD_DEFAULT);
+        
+        $sql = "INSERT INTO usuario (nome, email, senha) VALUES (:nome, :email, :senha)";
+        $stmt = $this->conexao->prepare($sql);
+        $stmt->bindValue(':nome', $nome);
+        $stmt->bindValue(':email', $email);
+        $stmt->bindValue(':senha', $senhaHash);
+        
+        return $stmt->execute();
+    }
 
-            // Se achou uma linha, retorna os dados
-            if ($stmt->rowCount() > 0) {
-                return $stmt->fetch(PDO::FETCH_ASSOC); 
-            } else {
-                return false;
+    
+    public function logar($usuario) {
+        
+        $sql = "SELECT * FROM usuario WHERE email = :email";
+        $stmt = $this->conexao->prepare($sql);
+        $stmt->bindValue(':email', $usuario->getEmail());
+        $stmt->execute();
+
+        // Pega os dados do usuário encontrado
+        $dadosUsuario = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        // Se achou o usuário, verifica a senha criptografada
+        if ($dadosUsuario) {
+
+            // password_verify(senha_digitada, senha_do_banco_criptografada)
+            if (password_verify($usuario->getSenha(), $dadosUsuario['senha'])) {
+
+                return $dadosUsuario; // Retorna os dados
             }
-        } catch (PDOException $e) {
-            return false;
         }
+
+        // Se não achou o email OU a senha não bateu
+        return false;
     }
 }
-
 ?>

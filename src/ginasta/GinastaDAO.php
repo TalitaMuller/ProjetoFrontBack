@@ -48,6 +48,20 @@ class GinastaDAO {
             return [];
         }
     }
+
+
+    public function buscarPorId($id) {
+        
+        $sql = "SELECT g.*, t.nome as nome_turma 
+                FROM ginasta g 
+                LEFT JOIN turma t ON g.idTurma = t.id 
+                WHERE g.id = ?";
+        
+        $stmt = $this->conexao->prepare($sql);
+        $stmt->execute([$id]);
+        
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
 }
 
 ?>
