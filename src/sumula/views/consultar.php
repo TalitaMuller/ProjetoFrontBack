@@ -1,5 +1,4 @@
 <?php
-
 require_once '../../../includes/verifica_login.php';
 require_once '../../ginasta/GinastaDAO.php';
 require_once '../../aparelho/AparelhoDAO.php';
@@ -10,7 +9,6 @@ $listaGinastas = $ginastaDAO->listar();
 
 $aparelhoDAO = new AparelhoDAO();
 $listaAparelhos = $aparelhoDAO->listar();
-
 ?>
 
 <!DOCTYPE html>
@@ -18,19 +16,31 @@ $listaAparelhos = $aparelhoDAO->listar();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ver Resultados</title>
-    <link rel="stylesheet" href="../../../assets/css/style.css">
+    <title>Consultar Súmula - Súmula Digital</title>
+    
+    <link rel="stylesheet" href="../../../assets/css/global.css?v=10">
+    
+    <link rel="stylesheet" href="../../../assets/css/pages/form-crud.css?v=10">
+
+    <link rel="shortcut icon" href="../../../assets/img/favicon.ico" type="image/x-icon">
+
 </head>
 <body>
 
-    <main>
-        <a href="../../../home.php">⬅ Voltar ao Painel</a>
-        <hr>
+    <main class="crud-container">
+        
+        <nav class="breadcrumbs" aria-label="Breadcrumb">
+            <a href="../../../home.php">Home</a> 
+            <span>/</span> 
+            <strong>Consultar Súmula</strong>
+        </nav>
 
-        <h2>Consultar Boletim</h2>
-        <p style="text-align: center; color: #666; margin-bottom: 20px;">
-            Selecione a ginasta e o aparelho para ver a nota calculada.
-        </p>
+        <header class="form-header">
+            <h2>Ver Resultados</h2>
+            <p style="color: #666; font-size: 0.9rem; margin-top: 5px;">
+                Selecione a ginasta e o aparelho para visualizar a nota.
+            </p>
+        </header>
 
         <form action="boletim.php" method="GET">
             
@@ -40,7 +50,8 @@ $listaAparelhos = $aparelhoDAO->listar();
                     <option value="">Selecione...</option>
                     <?php foreach($listaGinastas as $g): ?>
                         <option value="<?php echo $g['id']; ?>">
-                            <?php echo $g['nome']; ?> (<?php echo $g['nome_turma']; ?>)
+                            <?php echo htmlspecialchars($g['nome']); ?> 
+                            (<?php echo htmlspecialchars($g['nome_turma']); ?>)
                         </option>
                     <?php endforeach; ?>
                 </select>
@@ -52,18 +63,23 @@ $listaAparelhos = $aparelhoDAO->listar();
                     <option value="">Selecione...</option>
                     <?php foreach($listaAparelhos as $a): ?>
                         <option value="<?php echo $a['id']; ?>">
-                            <?php echo $a['nome']; ?>
+                            <?php echo htmlspecialchars($a['nome']); ?>
                         </option>
                     <?php endforeach; ?>
                 </select>
             </div>
             
-            <button type="submit" style="background-color: #1cacbc;">
-                Ver Nota e Boletim
-            </button>
+            <div class="form-actions">
+                <a href="../../../home.php" class="btn-cancelar">Cancelar</a>
+                
+                <button type="submit" class="btn-primary">
+                    Ver Súmula
+                </button>
+            </div>
         </form>
 
     </main>
-
+    
+    <script src="../../../assets/js/components/darkmode.js"></script>
 </body>
 </html>

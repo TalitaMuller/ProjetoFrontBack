@@ -1,0 +1,44 @@
+/* =========================================
+   COMPONENTE DE UPLOAD 
+   ========================================= */
+
+.area-upload {
+    border: 2px dashed #ccc;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: 0.3s;
+    background: #fafafa;
+    margin-bottom: 10px;
+    display: block; 
+}
+
+/* Efeito Hover e Dragover */
+.area-upload:hover, .area-upload.dragover {
+    border-color: var(--primary-color);
+    background: #eafbfd; 
+}
+
+/* Esconde o input file padrão feio */
+.area-upload input[type="file"] {
+    display: none; 
+}
+
+/* A imagem de preview */
+.preview-img {
+    max-width: 100px;
+    max-height: 100px;
+    border-radius: 50%;
+    margin-top: 10px;
+    display: none; /* Começa escondida */
+    border: 2px solid #ddd;
+    object-fit: cover;
+}
+
+/* Texto de instrução */
+.texto-upload {
+    color: #666;
+    font-size: 0.9rem;
+    font-weight: 500;
+}

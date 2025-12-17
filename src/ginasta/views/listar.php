@@ -1,11 +1,9 @@
 <?php
-
 require_once '../../../includes/verifica_login.php';
 require_once '../GinastaDAO.php';
 
 $ginastaDAO = new GinastaDAO();
 $listaGinastas = $ginastaDAO->listar();
-
 ?>
 
 <!DOCTYPE html>
@@ -14,57 +12,115 @@ $listaGinastas = $ginastaDAO->listar();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lista de Ginastas - Súmula Digital</title>
-    <link rel="stylesheet" href="../../../assets/css/style.css">
+    
+    <link rel="stylesheet" href="../../../assets/css/global.css?v=18">
+    <link rel="stylesheet" href="../../../assets/css/pages/listar.css?v=18">
+    <link rel="stylesheet" href="../../../assets/css/components/modal.css?v=18">
+    <link rel="stylesheet" href="../../../assets/css/components/menu.css?v=21">
+
+    <link rel="shortcut icon" href="../../../assets/img/favicon.ico" type="image/x-icon">
+
 </head>
 <body>
 
-    <main>
-        <div style="margin-bottom: 20px;">
-            <a href="../../../home.php"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#000000" viewBox="0 0 256 256"><path d="M224,128a8,8,0,0,1-8,8H59.31l58.35,58.34a8,8,0,0,1-11.32,11.32l-72-72a8,8,0,0,1,0-11.32l72-72a8,8,0,0,1,11.32,11.32L59.31,120H216A8,8,0,0,1,224,128Z"></path></svg> Voltar ao Painel</a> | 
-            <a href="cadastrar.php"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#000000" viewBox="0 0 256 256"><path d="M224,128a8,8,0,0,1-8,8H136v80a8,8,0,0,1-16,0V136H40a8,8,0,0,1,0-16h80V40a8,8,0,0,1,16,0v80h80A8,8,0,0,1,224,128Z"></path></svg> Cadastrar Nova Ginasta</a>
-        </div>
-        
-        <h2>Ginastas Cadastradas</h2>
+    <?php include '../../../includes/menu.php'; ?>
 
-        <?php if(isset($_GET['sucesso'])): ?>
-            <div class="msg-sucesso">Ação realizada com sucesso!</div>
+    <main>
+        <div class="topo-listagem">
+            <h2>Ginastas Cadastradas</h2>
+            
+            <div class="acoes-topo">
+                <input type="text" id="input-busca" placeholder="Pesquisar ginasta...">
+                
+                <a href="cadastrar.php" class="btn-adicionar">
+                    + Nova Ginasta
+                </a>
+            </div>
+        </div>
+
+        <?php if(isset($_GET['msg'])): ?>
+            <div class="msg-sucesso">
+                <?php 
+                    if($_GET['msg'] == 'cadastrado') echo "Ginasta cadastrada com sucesso!";
+                    elseif($_GET['msg'] == 'atualizado') echo "Dados atualizados com sucesso!";
+                    elseif($_GET['msg'] == 'excluido') echo "Ginasta excluída com sucesso!";
+                    else echo "Ação realizada com sucesso!";
+                ?>
+            </div>
+        <?php endif; ?>
+        
+        <?php if(isset($_GET['erro'])): ?>
+            <div class="msg-erro">
+                <?php 
+                    if($_GET['erro'] == 'tem_notas') echo "Não é possível excluir: Esta ginasta já possui notas lançadas!";
+                    else echo "Ocorreu um erro na operação.";
+                ?>
+            </div>
         <?php endif; ?>
 
-        <table>
-            <thead>
-                <tr>
-                    <th>Foto</th>
-                    <th>Nome</th>
-                    <th>Ano Nasc.</th>
-                    <th>Turma</th>
-                    <th>Ações</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach($listaGinastas as $g): ?>
-                    <tr>
-                        <td>
-                            <img src="../../../assets/img/<?php echo $g['foto']; ?>" class="foto-perfil">
-                        </td>
-                        <td><?php echo $g['nome']; ?></td>
-                        <td><?php echo $g['anoNasc']; ?></td>
-                        <td><?php echo $g['nome_turma']; ?></td>
-                        <td>
-                            <a href="#">Editar</a> | 
-                            <a href="#">Excluir</a> |
-                            <a href="#" style="color: #27ae60;"><strong> Montar Súmula</strong></a>
-                        </td>
-                    </tr>
-                <?php endforeach; ?>
-                
-                <?php if(empty($listaGinastas)): ?>
-                    <tr>
-                        <td colspan="5" style="text-align:center; padding: 20px;">Nenhuma ginasta cadastrada ainda.</td>
-                    </tr>
-                <?php endif; ?>
-            </tbody>
-        </table>
+        <?php if (count($listaGinastas) > 0): ?>
+            <div style="overflow-x: auto;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 60px; text-align: center;">Foto</th> 
+                            <th>Nome</th>
+                            <th>Ano Nasc.</th>
+                            <th>Turma</th>
+                            <th style="text-align: center;">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach($listaGinastas as $g): ?>
+                            <tr>
+                                <td style="text-align: center;">
+                                    <img src="../../../assets/img/<?php echo !empty($g['foto']) ? $g['foto'] : 'perfilPadrao.png'; ?>" 
+                                         class="foto-perfil-tabela" 
+                                         alt="Foto de <?php echo htmlspecialchars($g['nome']); ?>">
+                                </td>
+                                
+                                <td style="font-weight: 500;"><?php echo htmlspecialchars($g['nome']); ?></td>
+                                
+                                <td><?php echo htmlspecialchars($g['anoNasc']); ?></td>
+                                
+                                <td style="color: var(--text-muted);"><?php echo htmlspecialchars($g['nome_turma']); ?></td>
+                                
+                                <td style="text-align: center;">
+                                    <a href="editar.php?id=<?php echo $g['id']; ?>" class="acao-icon" title="Editar Dados">
+                                        ✏️
+                                    </a>
+
+                                    <a href="../GinastaController.php?acao=excluir&id=<?php echo $g['id']; ?>" 
+                                       class="acao-icon" 
+                                       onclick="confirmarExclusao(event, '<?php echo htmlspecialchars($g['nome']); ?>', this.href);" 
+                                       title="Excluir">
+                                        🗑️
+                                    </a>
+                                    
+                                    <a href="../../sumula/views/selecionar.php?idGinasta=<?php echo $g['id']; ?>" 
+                                       class="acao-icon" 
+                                       style="color: var(--success-color);" 
+                                       title="Montar Súmula">
+                                        📝
+                                    </a>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+        <?php else: ?>
+            <div class="msg-erro" style="background: var(--input-bg); color: var(--text-muted); border: 1px solid var(--border-color);">
+                Nenhuma ginasta cadastrada ainda.
+            </div>
+        <?php endif; ?>
     </main>
 
+    <script src="../../../assets/js/components/modal.js?v=12"></script>
+    <script src="../../../assets/js/components/darkmode.js?v=12"></script>
+    <script src="../../../assets/js/components/menu.js?v=20"></script>
+
+
+    <script src="../../../assets/js/components/filtro.js?v=1"></script>
 </body>
 </html>

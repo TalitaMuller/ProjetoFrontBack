@@ -1,8 +1,16 @@
 <?php
 require_once '../../../includes/verifica_login.php';
+require_once '../TurmaDAO.php';
 require_once '../../entidade/EntidadeDAO.php';
 
-// Busca lista para o select
+// Validações de ID
+if (!isset($_GET['id'])) { header('Location: listar.php'); exit; }
+
+$dao = new TurmaDAO();
+$turma = $dao->buscarPorId($_GET['id']);
+if (!$turma) { header('Location: listar.php'); exit; }
+
+// Busca todas as entidades para o select
 $entidadeDAO = new EntidadeDAO();
 $listaEntidades = $entidadeDAO->listar();
 ?>
@@ -12,7 +20,7 @@ $listaEntidades = $entidadeDAO->listar();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastrar Turma - Súmula Digital</title>
+    <title>Editar Turma</title>
     
     <link rel="stylesheet" href="../../../assets/css/global.css?v=10">
     
@@ -30,44 +38,39 @@ $listaEntidades = $entidadeDAO->listar();
             <span>/</span> 
             <a href="listar.php">Turmas</a>
             <span>/</span> 
-            <strong>Cadastrar</strong>
+            <strong>Editar</strong>
         </nav>
 
         <header class="form-header">
-            <h2>Cadastrar Nova Turma</h2>
+            <h2>Editar Turma</h2>
         </header>
 
-        <?php if(isset($_GET['erro'])): ?>
-            <div class="msg-erro">
-                Erro ao cadastrar. Verifique os dados.
-            </div>
-        <?php endif; ?>
-
         <form action="../TurmaController.php" method="POST">
-            <input type="hidden" name="acao" value="cadastrar">
-            
+            <input type="hidden" name="acao" value="atualizar">
+            <input type="hidden" name="id" value="<?php echo $turma['id']; ?>">
+
             <div>
                 <label for="nome">Nome da Turma</label>
-                <input type="text" id="nome" name="nome" placeholder="Ex: Iniciação Tarde" required>
+                <input type="text" name="nome" id="nome" value="<?php echo htmlspecialchars($turma['nome']); ?>" required>
             </div>
 
             <div>
                 <label for="idEntidade">Entidade (Clube/Escola)</label>
                 <select name="idEntidade" id="idEntidade" required>
-                    <option value="">Selecione uma entidade...</option>
-                    <?php foreach($listaEntidades as $entidade): ?>
-                        <option value="<?php echo $entidade['id']; ?>">
-                            <?php echo htmlspecialchars($entidade['nome']); ?>
+                    <?php foreach($listaEntidades as $e): ?>
+                        <option value="<?php echo $e['id']; ?>" 
+                            <?php echo ($e['id'] == $turma['idEntidade']) ? 'selected' : ''; ?>>
+                            <?php echo htmlspecialchars($e['nome']); ?>
                         </option>
                     <?php endforeach; ?>
                 </select>
             </div>
-            
+
             <div class="form-actions">
                 <a href="listar.php" class="btn-cancelar">Cancelar</a>
                 
                 <button type="submit" class="btn-salvar">
-                    Salvar Turma
+                    Salvar Alterações
                 </button>
             </div>
         </form>

@@ -1,0 +1,188 @@
+/* =========================================
+   ESTILOS DA PÁGINA DE CADASTRO 
+   ========================================= */
+
+/*  Centraliza na Tela */
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: var(--bg-color);
+    padding: 20px 0;
+}
+
+/* O Cartão de Cadastro */
+.card-cadastro {
+    width: 100%;
+    max-width: 450px;
+    padding: 30px;
+    
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    
+    transition: all 0.3s ease;
+}
+
+header h2 {
+    text-align: center;
+    color: var(--primary-color);
+    margin-bottom: 25px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+label {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin-bottom: 5px;
+    display: block;
+}
+
+/* INPUTS BLINDADOS*/
+input {
+    width: 100%;
+    background-color: var(--input-bg) !important; 
+    color: var(--text-color) !important;
+    border: 1px solid var(--border-color);
+    padding: 14px 12px;
+    border-radius: 6px;
+    font-size: 1rem;
+    box-sizing: border-box; 
+    appearance: none;
+    -webkit-appearance: none;
+}
+
+input:focus {
+    border-color: var(--primary-color);
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(28, 172, 188, 0.2);
+}
+
+/* Correção do Autocomplete*/
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 1000px var(--input-bg) inset !important;
+    -webkit-text-fill-color: var(--text-color) !important;
+    transition: background-color 9999s ease-in-out 0s;
+    border: 1px solid var(--border-color) !important;
+}
+
+/*  GRUPO SENHA - ALINHAMENTO CORRIGIDO AQUI */
+.grupo-senha {
+    position: relative; 
+    width: 100%;        
+}
+
+.grupo-senha input {
+    width: 100%;
+    padding-right: 45px; /
+}
+
+.olho-senha {
+    position: absolute; 
+    right: 15px;        
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 1.2rem;
+    background: transparent;
+    opacity: 0.7;
+    user-select: none;
+    transition: 0.3s;
+    color: var(--text-color);
+    z-index: 10; 
+    display: flex;
+    align-items: center;
+    height: 100%; 
+    max-height: 20px; 
+}
+
+.olho-senha:hover { opacity: 1; transform: translateY(-50%) scale(1.1); }
+
+/* Lista de Requisitos */
+.requisitos-senha {
+    list-style: none;
+    padding: 15px;
+    background-color: var(--input-bg); 
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin: 5px 0;
+}
+
+.requisitos-senha li {
+    margin-bottom: 5px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.requisitos-senha li::before {
+    content: "✖";
+    color: var(--danger-color);
+    font-weight: bold;
+    min-width: 15px;
+}
+
+.requisitos-senha li.valido {
+    color: var(--success-color);
+    font-weight: 600;
+}
+
+.requisitos-senha li.valido::before {
+    content: "✔";
+    color: var(--success-color);
+}
+
+/* Mensagens e Botões */
+#msg-conferir {
+    display: none;
+    color: var(--danger-color);
+    font-size: 0.9rem;
+    text-align: right;
+    margin-top: -10px;
+    font-weight: bold;
+}
+
+#msg-conferir.visivel { display: block; }
+
+button[type="submit"] {
+    margin-top: 15px;
+    width: 100%;
+    background-color: var(--primary-color);
+    color: white;
+    padding: 14px;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button[type="submit"]:hover {
+    background-color: var(--primary-hover);
+    transform: translateY(-2px);
+}
+
+button[type="submit"]:disabled {
+    background-color: #555;
+    color: #999;
+    cursor: not-allowed;
+    transform: none;
+    opacity: 0.6;
+}
+
+footer { margin-top: 20px; }
+footer a { color: var(--text-muted) !important; text-decoration: none; }
+footer a strong { color: var(--primary-color); }

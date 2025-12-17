@@ -1,7 +1,5 @@
 <?php
-
-require_once __DIR__ . '/../../config/Conecta.php'; 
-require_once 'Turma.php';
+require_once __DIR__ . '/../../config/Conecta.php';
 
 class TurmaDAO {
     private $conexao;
@@ -11,41 +9,46 @@ class TurmaDAO {
         $this->conexao = $database->getConexao();
     }
 
-    public function inserir(Turma $turma) {
-        try {
-            
-            $sql = "INSERT INTO turma (nome, idEntidade) VALUES (:nome, :idEntidade)";
-            $stmt = $this->conexao->prepare($sql);
-            
-            $stmt->bindValue(':nome', $turma->getNome());
-            $stmt->bindValue(':idEntidade', $turma->getIdEntidade());
-            
-            return $stmt->execute();
-        } catch (PDOException $e) {
-            return false;
-        }
+    public function cadastrar($turma) {
+        $sql = "INSERT INTO turma (nome, idEntidade) VALUES (?, ?)";
+        $stmt = $this->conexao->prepare($sql);
+        $stmt->bindValue(1, $turma->getNome());
+        $stmt->bindValue(2, $turma->getIdEntidade());
+        return $stmt->execute();
     }
 
     public function listar() {
-        try {
+        // Faz o JOIN para mostrar o nome da Entidade na lista
+        $sql = "SELECT t.*, e.nome as nome_entidade 
+                FROM turma t 
+                LEFT JOIN entidade e ON t.idEntidade = e.id 
+                ORDER BY t.nome ASC";
+        $stmt = $this->conexao->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 
-            $sql = "SELECT t.*, e.nome as nome_entidade 
-                    FROM turma t 
-                    JOIN entidade e ON t.idEntidade = e.id 
-                    ORDER BY t.nome ASC";
+    public function buscarPorId($id) {
+        $sql = "SELECT * FROM turma WHERE id = ?";
+        $stmt = $this->conexao->prepare($sql);
+        $stmt->execute([$id]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
 
-            $stmt = $this->conexao->prepare($sql);
+    public function atualizar($turma) {
+        $sql = "UPDATE turma SET nome = ?, idEntidade = ? WHERE id = ?";
+        $stmt = $this->conexao->prepare($sql);
+        $stmt->bindValue(1, $turma->getNome());
+        $stmt->bindValue(2, $turma->getIdEntidade());
+        $stmt->bindValue(3, $turma->getId());
+        return $stmt->execute();
+    }
 
-            $stmt->execute();
-
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-        } catch (PDOException $e) {
-            return [];
-        }
+    public function excluir($id) {
+        $sql = "DELETE FROM turma WHERE id = ?";
+        $stmt = $this->conexao->prepare($sql);
+        $stmt->bindValue(1, $id);
+        return $stmt->execute();
     }
 }
-
-
-
 ?>

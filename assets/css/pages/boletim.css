@@ -1,0 +1,249 @@
+/* =========================================
+   ESTILOS DO BOLETIM 
+   ========================================= */
+
+/* Centraliza o Boletim */
+main {
+    margin: 20px auto;
+    width: 95%;
+}
+
+/* Cabeçalho com Foto e Nota */
+.cabecalho-resultado {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 25px;
+    
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: var(--shadow);
+    
+    /* Borda lateral verde decorativa */
+    border-left: 5px solid var(--success-color);
+}
+
+.ginasta-info {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.foto-boletim {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--primary-color);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.ginasta-info h2 {
+    color: var(--text-color) !important;
+    font-size: 1.8rem;
+    margin: 0;
+}
+
+.ginasta-info p {
+    color: var(--text-muted) !important;
+    margin-top: 5px;
+}
+
+/* Placa Verde da Nota */
+.placar-nota {
+    background: linear-gradient(135deg, #28a745, #218838);
+    color: white;
+    padding: 15px 30px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(40, 167, 69, 0.4);
+}
+
+.placar-nota span {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    opacity: 0.9;
+}
+
+.placar-nota h1 {
+    font-size: 3rem;
+    margin: 0;
+    line-height: 1;
+    font-weight: 800;
+    color: white !important;
+}
+
+/* Tabela de Resultados */
+.container-tabela {
+    overflow-x: auto; /* Permite rolar horizontalmente no celular */
+    background-color: var(--card-bg);
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    padding: 5px; /* Espaço para a sombra não cortar */
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 800px; /* Garante que não esmague em telas pequenas */
+}
+
+th {
+    background-color: #556270; /* Cabeçalho cinza escuro fixo para contraste */
+    color: white;
+    padding: 15px;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    border: 1px solid #666;
+}
+
+/* Coluna Grupo */
+.coluna-grupo {
+    background-color: var(--input-bg);
+    text-align: center;
+    font-weight: bold;
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+    vertical-align: middle;
+}
+
+.coluna-grupo span { font-size: 1.2rem; color: var(--primary-color); }
+.coluna-grupo small { display: block; margin-top: 5px; font-weight: normal; color: var(--text-muted); }
+
+/* Células da Tabela */
+td {
+    border: 1px solid var(--border-color);
+    padding: 10px;
+    vertical-align: top;
+    background-color: var(--card-bg);
+}
+
+/* Cards de Exercício */
+.card-resultado {
+    background-color: var(--bg-color); /* Fundo sutil */
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    padding: 10px;
+    margin-bottom: 8px;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    transition: 0.3s;
+    
+    /* Centraliza texto verticalmente se for curto */
+    display: flex;
+    align-items: center;
+    min-height: 50px; 
+}
+
+/* Quando o exercício foi realizado */
+.card-resultado.feito {
+    background-color: rgba(40, 167, 69, 0.15); 
+    border: 1px solid #28a745;
+    color: #28a745; 
+    font-weight: 600;
+    position: relative;
+    padding-left: 25px; 
+}
+
+/* Ícone de Check ✔ antes do texto */
+.card-resultado.feito::before {
+    content: "✔";
+    position: absolute;
+    left: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+/* No Dark Mode, ajusta a cor do texto verde para brilhar mais */
+body.dark-mode .card-resultado.feito {
+    background-color: rgba(40, 167, 69, 0.25);
+    color: #4cd16e; /* Verde neon */
+    border-color: #2ea043;
+}
+
+/* Botão Imprimir  */
+.btn-imprimir {
+    display: block;
+    margin: 40px auto; 
+    width: 100%;
+    max-width: 300px; 
+    
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    
+    padding: 14px;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 6px; 
+    
+    cursor: pointer;
+    box-shadow: var(--shadow);
+    transition: all 0.3s ease;
+    
+    /* Flex para alinhar ícone e texto */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.btn-imprimir:hover {
+    background-color: var(--primary-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(28, 172, 188, 0.3);
+}
+
+.btn-imprimir:active {
+    transform: scale(0.98);
+}
+
+/* =========================================
+   ESTILOS DE IMPRESSÃO 
+   ========================================= */
+@media print {
+    /* Esconde menu, botões e dark mode toggle */
+    .no-print, #btn-tema, .btn-imprimir, .link-voltar {
+        display: none !important;
+    }
+
+    body, main {
+        background-color: white !important;
+        color: black !important;
+        margin: 0;
+        padding: 0;
+        box-shadow: none;
+        width: 100%;
+    }
+
+    /* Remove sombras e bordas pesadas */
+    .cabecalho-resultado, .container-tabela {
+        box-shadow: none;
+        border: 1px solid #ccc;
+    }
+
+    /* Força cores de impressão */
+    .placar-nota {
+        background: #28a745 !important;
+        color: white !important;
+        -webkit-print-color-adjust: exact;
+    }
+    
+    th {
+        background-color: #555 !important;
+        color: white !important;
+        -webkit-print-color-adjust: exact;
+    }
+
+    /* Marca visualmente os feitos com borda grossa preta ou cinza */
+    .card-resultado.feito {
+        border: 2px solid black;
+        font-weight: bold;
+        color: black;
+    }
+}

@@ -3,50 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Súmula Digital GA</title>
-    <link rel="stylesheet" href="assets/css/style.css">
     
-    <style>
-        
-        .grupo-senha {
-            position: relative;
-            width: 100%;
-        }
-        
-        /
-        .grupo-senha input {
-            width: 100%;
-            padding-right: 40px; 
-            box-sizing: border-box; 
-        }
+    <title>Login - Súmula Digital GA</title>
+    
+    <link rel="stylesheet" href="assets/css/global.css?v=15">
+    
+    <link rel="stylesheet" href="assets/css/pages/login.css?v=15">
 
-        .olho-senha {
-            position: absolute;
-            right: 10px;
-            top: 50%; 
-            transform: translateY(-50%); 
-            cursor: pointer;
-            font-size: 1.2rem;
-            color: #666;
-            user-select: none;
-            background: none;
-            border: none;
-        }
-        
-        .olho-senha:hover {
-            color: #1cacbc; 
-        }
-    </style>
+    <link rel="shortcut icon" href="assets/img/favicon.ico" type="image/x-icon">
 </head>
 <body>
 
-    <div class="login-container">
+    <main class="login-container">
         
-        <h2>Súmula Digital GA</h2>
+        <header>
+            <h1>Súmula Digital GA</h1>
+        </header>
         
         <?php if(isset($_GET['erro'])): ?>
-            <div class="msg-erro">
-                <?php
+            <div class="msg-erro" role="alert"> <?php
                     if ($_GET['erro'] == 'login_invalido') {
                         echo "Email ou senha incorretos!";
                     } else if ($_GET['erro'] == 'campos_vazios') {
@@ -69,31 +44,23 @@
                 <label for="senha">Senha:</label>
                 <div class="grupo-senha">
                     <input type="password" id="senha" name="senha" placeholder="Sua senha" required>
-                    <span class="olho-senha" onclick="alternarSenha()">👁️</span>
+                    <span class="olho-senha" onclick="alternarSenha()" role="button" aria-label="Mostrar senha">👁️</span>
                 </div>
             </div>
             
             <button type="submit" name="acao" value="logar">Entrar no Sistema</button>
         </form>
 
-        <a href="src/usuario/views/cadastro.php" style="display: block; margin-top: 15px; color: #666; text-decoration: none; font-size: 0.9rem;">
-            Não tem conta? <strong>Cadastre-se aqui</strong>
-        </a>
-    </div>
+        <footer>
+            <a href="src/usuario/views/cadastro.php" class="link-cadastro">
+                Não tem conta? <strong>Cadastre-se aqui</strong>
+            </a>
+        </footer>
+    </main>
 
-    <script>
-        function alternarSenha() {
-            const input = document.getElementById('senha');
-            const icone = document.querySelector('.olho-senha');
-            
-            if (input.type === "password") {
-                input.type = "text";
-                icone.textContent = "🙈"; 
-            } else {
-                input.type = "password";
-                icone.textContent = "👁️"; 
-        }
-    </script>
+    <script src="assets/js/pages/login.js" defer></script>
+
+    <script src="assets/js/components/darkmode.js"></script>
 
 </body>
 </html>

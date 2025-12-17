@@ -1,0 +1,198 @@
+/* =========================================
+   ESTILOS DE FORMULÁRIOS CRUD 
+   ========================================= */
+
+/* Container Centralizado */
+.crud-container {
+    width: 100%;
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 40px;
+    
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+}
+
+/* Navegação (Breadcrumbs) */
+.breadcrumbs {
+    margin-bottom: 20px;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+
+.breadcrumbs a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-weight: normal;
+}
+
+.breadcrumbs a:hover {
+    color: var(--primary-color);
+    text-decoration: underline;
+}
+
+.breadcrumbs span {
+    margin: 0 5px;
+    color: var(--border-color);
+}
+
+.breadcrumbs strong {
+    color: var(--text-color);
+    font-weight: 600;
+}
+
+/* Título do Formulário */
+.form-header h2 {
+    color: var(--primary-color);
+    margin-bottom: 30px;
+    text-align: center;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 15px;
+}
+
+/* Estrutura do Form */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Labels */
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: var(--text-color);
+    font-size: 0.95rem;
+}
+
+/* INPUTS BLINDADOS*/
+input[type="text"],
+input[type="number"],
+input[type="date"],
+input[type="email"],
+select,
+textarea {
+    width: 100%;
+    background-color: var(--input-bg) !important;
+    color: var(--text-color) !important;
+    border: 1px solid var(--border-color);
+    padding: 12px;
+    border-radius: 6px;
+    font-size: 1rem;
+    box-sizing: border-box;
+    appearance: none;
+    -webkit-appearance: none;
+}
+
+input:focus, select:focus, textarea:focus {
+    border-color: var(--primary-color);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(28, 172, 188, 0.15);
+}
+
+/* CORREÇÃO DO AUTOCOMPLETE*/
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 1000px var(--input-bg) inset !important;
+    -webkit-text-fill-color: var(--text-color) !important;
+    transition: background-color 9999s ease-in-out 0s;
+    border: 1px solid var(--border-color) !important;
+}
+
+/* Input de Arquivo*/
+input[type="file"] {
+    padding: 10px;
+    background-color: var(--bg-color) !important; 
+    border: 1px dashed var(--border-color);
+    cursor: pointer;
+}
+
+/* Texto de ajuda*/
+small {
+    display: block;
+    margin-top: 5px;
+    color: var(--text-muted) !important; 
+    font-size: 0.85rem;
+}
+
+/* Botões de Ação */
+.form-actions {
+    display: flex;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+/* Botão Salvar */
+.btn-salvar {
+    flex: 2; 
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 14px;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+    text-align: center;
+}
+
+.btn-salvar:hover {
+    background-color: var(--primary-hover);
+    transform: translateY(-2px);
+}
+
+/* Botão Cancelar */
+.btn-cancelar {
+    flex: 1;
+    background-color: var(--input-bg); 
+    color: var(--text-muted);
+    border: 1px solid var(--border-color);
+    padding: 14px;
+    border-radius: 6px;
+    font-size: 1rem;
+    text-align: center;
+    text-decoration: none;
+    transition: 0.3s;
+    font-weight: 500;
+}
+
+.btn-cancelar:hover {
+    background-color: var(--danger-color);
+    color: white;
+    border-color: var(--danger-color);
+}
+
+/* Mensagem de Erro */
+.msg-erro {
+    background-color: rgba(220, 53, 69, 0.1);
+    color: var(--danger-color);
+    border: 1px solid var(--danger-color);
+    padding: 15px;
+    border-radius: 6px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* --- RESPONSIVIDADE --- */
+@media (max-width: 600px) {
+    .crud-container {
+        padding: 20px;
+        margin: 20px auto;
+        width: 95%;
+    }
+    
+    .form-actions {
+        flex-direction: column-reverse; /* Cancelar embaixo no celular */
+    }
+    
+    .btn-salvar, .btn-cancelar {
+        width: 100%;
+        flex: auto;
+    }
+}

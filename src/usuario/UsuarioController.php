@@ -7,14 +7,11 @@ require_once 'UsuarioDAO.php';
 
 class UsuarioController {
 
-    // --- LOGIN (JÁ EXISTIA) ---
     public function logar() {
-
         $email = $_POST['email'];
         $senha = $_POST['senha'];
 
         if (!empty($email) && !empty($senha)) {
-
             $usuario = new Usuario();
             $usuario->setEmail($email);
             $usuario->setSenha($senha);
@@ -28,101 +25,156 @@ class UsuarioController {
                 $_SESSION['usuario_nome'] = $resultado['nome'];
                 
                 header("Location: ../../home.php");
+                exit;
             } else {
                 header("Location: ../../index.php?erro=login_invalido");
+                exit;
             }
         } else {
             header("Location: ../../index.php?erro=campos_vazios");
+            exit;
         }
     }
 
-    // --- SAIR (JÁ EXISTIA) ---
     public function sair() {
         session_destroy();
         header("Location: ../../index.php");
+        exit;
     }
 
-    // --- CADASTRAR (NOVO!) ---
-    // Trouxemos a lógica do salvar.php para cá
     public function cadastrar() {
         $nome = $_POST['nome'];
         $email = $_POST['email'];
         $senha = $_POST['senha'];
         $confirma_senha = $_POST['confirma_senha'];
 
-        // 1. Validação: Campos vazios
+        // Caminho da view de cadastro 
+        $url_erro = "Location: views/cadastrar.php"; 
+
+        // Campos vazios
         if (empty($nome) || empty($email) || empty($senha) || empty($confirma_senha)) {
-            echo "<script>alert('Preencha todos os campos!'); window.history.back();</script>";
-            return;
+            header("$url_erro?erro=campos_vazios");
+            exit;
         }
 
-        // 2. Validação: Senhas iguais
+        // Senhas iguais
         if ($senha !== $confirma_senha) {
-            echo "<script>alert('Erro: As senhas não coincidem!'); window.history.back();</script>";
-            return;
+            header("$url_erro?erro=senhas_diferentes");
+            exit;
         }
 
-        // 3. Validação de Senha Forte (Backend)
-        // Se a senha NÃO bater com alguma regra, barra o cadastro
+        // Validação de Senha Forte
         if (strlen($senha) < 8) {
-            echo "<script>alert('A senha deve ter no mínimo 8 caracteres!'); window.history.back();</script>";
-            return;
+            header("$url_erro?erro=senha_curta");
+            exit;
         }
         if (!preg_match('/[A-Z]/', $senha)) {
-            echo "<script>alert('A senha precisa de pelo menos uma letra maiúscula!'); window.history.back();</script>";
-            return;
+            header("$url_erro?erro=senha_sem_maiuscula");
+            exit;
         }
         if (!preg_match('/[a-z]/', $senha)) {
-            echo "<script>alert('A senha precisa de pelo menos uma letra minúscula!'); window.history.back();</script>";
-            return;
+            header("$url_erro?erro=senha_sem_minuscula");
+            exit;
         }
         if (!preg_match('/[0-9]/', $senha)) {
-            echo "<script>alert('A senha precisa de pelo menos um número!'); window.history.back();</script>";
-            return;
+            header("$url_erro?erro=senha_sem_numero");
+            exit;
         }
         if (!preg_match('/[^A-Za-z0-9]/', $senha)) {
-            echo "<script>alert('A senha precisa de pelo menos um símbolo especial (ex: ! @ #) !'); window.history.back();</script>";
-            return;
+            header("$url_erro?erro=senha_sem_simbolo");
+            exit;
         }
 
-        // Se passou por tudo, tenta salvar
         try {
             $usuarioDAO = new UsuarioDAO();
             $usuarioDAO->cadastrar($nome, $email, $senha);
 
-            echo "<script>
-                    alert('Usuário cadastrado com sucesso! Faça login agora.');
-                    window.location.href = '../../index.php'; 
-                  </script>";
+            header("Location: ../../index.php?msg=cadastrado");
+            exit;
 
         } catch (PDOException $e) {
             if ($e->getCode() == 23000) { 
-                echo "<script>alert('Erro: Este e-mail já está cadastrado!'); window.history.back();</script>";
+                header("$url_erro?erro=email_existente");
             } else {
-                echo "Erro ao cadastrar: " . $e->getMessage();
+                header("$url_erro?erro=erro_banco");
             }
+            exit;
         }
     }
-    
+
+    public function atualizar() {
+        if (!isset($_SESSION['usuario_id'])) {
+            header("Location: ../../index.php?erro=acesso_negado");
+            exit;
+        }
+
+        $id = $_SESSION['usuario_id'];
+        $nome = $_POST['nome'];
+        $email = $_POST['email'];
+        $nova_senha = $_POST['nova_senha'];
+
+        $dao = new UsuarioDAO();
+
+        // Atualiza Nome e Email
+        $dao->atualizarDados($id, $nome, $email);
+        
+        // Atualiza a sessão para o nome novo aparecer no topo
+        $_SESSION['usuario_nome'] = $nome;
+
+        // Se digitou senha nova
+        if (!empty($nova_senha)) {
+            if (strlen($nova_senha) < 6) {
+                header("Location: views/perfil.php?erro=senha_curta");
+                exit;
+            }
+            $dao->atualizarSenha($id, $nova_senha);
+        }
+
+        // Redireciona com parâmetro MSG para o JavaScript pegar
+        header("Location: views/perfil.php?msg=atualizado");
+        exit;
+    }
+
+    public function excluir() {
+        if (!isset($_SESSION['usuario_id'])) {
+            header("Location: ../../index.php");
+            exit;
+        }
+
+        $id = $_SESSION['usuario_id'];
+        $dao = new UsuarioDAO();
+
+        if ($dao->excluir($id)) {
+            session_destroy();
+            // Avisa no login que a conta foi excluída
+            header("Location: ../../index.php?msg=conta_excluida");
+            exit;
+        } else {
+            header("Location: views/perfil.php?erro=erro_excluir");
+            exit;
+        }
+    }
 }
 
-// --- ROTEADOR (QUEM CHAMA AS FUNÇÕES) ---
+// --- ROTEADOR ---
 $controller = new UsuarioController();
 
-// Verifica qual ação veio do formulário
 if (isset($_POST['acao'])) {
-    
     if ($_POST['acao'] == 'logar') {
         $controller->logar();
     }
-    else if ($_POST['acao'] == 'cadastrar') { // Adicionamos essa verificação
+    else if ($_POST['acao'] == 'cadastrar') {
         $controller->cadastrar();
     }
-    
+    else if ($_POST['acao'] == 'atualizar') {
+        $controller->atualizar();
+    }
 } else if (isset($_GET['acao'])) {
-    
     if ($_GET['acao'] == 'sair') {
         $controller->sair();
+    }
+    else if ($_GET['acao'] == 'excluir_conta') { 
+        $controller->excluir(); 
     }
 }
 ?>

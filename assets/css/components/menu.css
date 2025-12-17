@@ -1,0 +1,141 @@
+/* =========================================
+   ESTILOS DO MENU RESPONSIVO
+   ========================================= */
+
+.cabecalho-principal {
+    background-color: var(--card-bg);
+    border-bottom: 1px solid var(--border-color);
+    box-shadow: var(--shadow);
+    padding: 0 20px;
+    position: sticky; /* Menu fixa no topo */
+    top: 0;
+    z-index: 1000;
+}
+
+.container-menu {
+    max-width: 1200px;
+    margin: 0 auto;
+    height: 70px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Logo */
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+/* Links Desktop */
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: var(--text-muted);
+    font-weight: 500;
+    font-size: 0.95rem;
+    transition: 0.3s;
+}
+
+.nav-links a:hover {
+    color: var(--primary-color);
+}
+
+.btn-sair {
+    color: var(--danger-color) !important;
+}
+
+/* Botão Dark Mode no Menu */
+.btn-tema-toggle {
+    background: none;
+    border: 1px solid var(--border-color);
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    cursor: pointer;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.3s;
+}
+
+.btn-tema-toggle:hover {
+    background-color: var(--input-bg);
+}
+
+/* Esconde o hambúrguer no Desktop */
+.menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 1.8rem;
+    color: var(--text-color);
+    cursor: pointer;
+}
+
+/* Divisor */
+.divisor-menu {
+    width: 1px;
+    height: 25px;
+    background-color: var(--border-color);
+}
+
+
+/* Link Ativo */
+.nav-links a.ativo {
+    color: var(--primary-color);
+    font-weight: bold;
+    border-bottom: 2px solid var(--primary-color);
+}
+
+/* Ajuste para o botão Sair não pegar a borda azul se por acaso ativar */
+.nav-links a.btn-sair.ativo {
+    border-bottom: none;
+    color: var(--danger-color);
+}
+
+/* --- RESPONSIVIDADE MOBILE --- */
+@media (max-width: 900px) {
+    .menu-toggle {
+        display: block; /* Mostra o botão */
+    }
+
+    .nav-links {
+        position: fixed;
+        top: 70px; /* Logo abaixo do header */
+        left: 0;
+        width: 100%;
+        background-color: var(--card-bg);
+        border-bottom: 1px solid var(--border-color);
+        box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+        
+        flex-direction: column; /* Lista vertical */
+        align-items: center;
+        padding: 20px 0;
+        gap: 20px;
+        
+        /* Escondido por padrão */
+        transform: translateY(-150%);
+        transition: transform 0.3s ease;
+        opacity: 0;
+    }
+
+    /* Classe ativa (via JS) para mostrar o menu */
+    .nav-links.ativo {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    
+    .divisor-menu {
+        width: 80%;
+        height: 1px; /* Vira horizontal */
+    }
+}
